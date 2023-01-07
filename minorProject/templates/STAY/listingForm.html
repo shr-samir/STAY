@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>listingForm</title>
+  <style>
+    body{
+  margin-left: 50px;
+  background-color: white;
+}
+h1{
+  text-align: center;
+  margin-bottom: 45px;
+}
+
+#bigBox{
+  background-color: #efefef;
+  margin-left: 20px;
+  margin-bottom: 50px;
+  border: 1px solid #000;
+  border-radius: 15px;
+  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.05);
+  padding-left: 20px;
+  width: 1200px; 
+  height: 280px;
+}   
+h3{
+  padding-left: 10px;
+}
+
+select{
+  margin-left: 10px;
+  padding: 6px;
+}
+
+.phone{
+  background-color: #efefef;
+  margin-left: 20px;
+  margin-bottom: 50px;
+  border: 1px solid #000;
+  border-radius: 15px;
+  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.05);
+  padding-left: 20px;
+  width: 500px; 
+  height: 150px;
+  float: left;
+}
+
+
+.rent {
+  background-color: #efefef;
+  margin-right: 50px;
+  margin-bottom: 50px;
+  border: 1px solid #000;
+  border-radius: 15px;
+  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.05);
+  padding-left: 20px;
+  width: 500px; 
+  height: 150px;
+  float: right;
+}
+
+.checkboxes input{                              /* is being used for checkbox */
+  margin: 0px 20px;
+}
+.checkboxes table{
+  border-collapse: collapse;
+  border-spacing: 0px;
+}
+.checkboxes td {
+  padding: 8px 0px 15px 8px;
+}
+
+.listingBtn{
+  margin-right: 50px;
+  height: 35px;
+  width: 130px;
+  background-color: #00c851;
+  border-radius: 8px;
+  border-color: #00c851;
+  float: right;
+}
+.cancelBtn{
+  margin-left: 30px;
+  height: 35px;
+  width: 80px;
+  background-color: #ff4444;
+  border-radius: 8px;
+  border-color: #ff4444;
+  float: right;
+}
+
+  </style>
+</head>
+<body>
+  <h1>List your Room</h1>
+
+  <div>
+    <form class="locationBox" id="bigBox" method="POST" style=" height: 130px">
+        {% csrf_token %}
+        <h3>Location</h3>
+        <input type="text" name="location" placeholder="Location of the property you are listing." style="margin-left: 10px; padding: 6px; width: 95%; height: 18px">
+    
+    </form>
+
+    <form class="layoutBox" id="bigBox" action="listingForm" method="POST">
+      {% csrf_token %}
+      <h3>Layout</h3>
+      <table align="left" cellpadding="8">
+        <tr>
+          <td>Room Type</td>
+          <td>
+            <label type="number" for="roomType">
+            <select id="roomType" name="roomType">
+              <option value="roomType">Entire Flat</option>
+              <option value="roomType">Shared Room</option>
+              <option value="roomType">Private Room</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>Total Number of Bedrooms</td>
+          <td>
+            <input type="number" for="bedrooms" name="bedrooms" style="margin-left: 10px; padding: 6px; width: 80%;">
+          </td>
+        </tr>
+        <tr>
+          <td>Total Number of Bathrooms</td>
+          <td>
+            <input type="number" for="bathrooms" name="bathrooms" style="margin-left: 10px; padding: 6px; width: 80%;">
+          </td>
+        </tr>
+        <tr>
+          <td>Total Number of Occupants Allowed</td>
+          <td>
+            <input type="number" for="occupants" name="occupants" style="margin-left: 10px; padding: 6px; width: 80%;">
+          </td>
+        </tr>
+      </table>  
+    </form>
+  </div>
+
+  <div>
+
+    <form class="rent" method="POST">
+      {% csrf_token %}
+      <h3>Rent</h3>
+      <input type="number" name="rent" placeholder="Rs." style="margin-left: 10px; padding: 6px; width: 80%;">
+    </form>
+
+    <form class="phone" method="POST">
+      {% csrf_token %}
+      <h3>Phone Number</h3>
+      <input type="tel" name="phoneNum" placeholder="Phone Number" style="margin-left: 10px; padding: 6px; width: 80%;">
+    </form>
+
+  </div>
+
+  <br>
+
+  <div class="checkboxes">
+    <form class="amenitiesBox" id="bigBox" method="POST" style="margin-top: 190px; height: 250px;">
+      {% csrf_token %}
+      <h3>Amenities</h3>
+      <table>
+        <tr><td><input type="checkbox" name="furnished">Furnished</td>
+            <td><input type="checkbox" name="wifiIncluded">Wifi Included </td>
+            <td><input type="checkbox" name="privateBathroom">Private Bathroom </td>
+            <td><input type="checkbox" name="hasDogs">Has Dogs</td></tr>
+
+        <tr><td><input type="checkbox" name="water24hr">24-hr Water</td>
+            <td><input type="checkbox" name="rooftopAccess">Rooftop Access</td>
+            <td><input type="checkbox" name="ac">Air Conditioning</td>
+            <td><input type="checkbox" name="hasCats">Has Cats</td></tr>
+
+        <tr><td><input type="checkbox" name="balcony">Balcony </td>
+            <td><input type="checkbox" name="outdoorSpace">Outdoor Space</td>
+            <td><input type="checkbox" name="utilitiesIncluded">Utilities Included</td>
+            <td><input type="checkbox" name="hasOtherPets">Has Other Pets</td></tr>
+
+        <tr><td><input type="checkbox" name="bikeParking">Bike Parking</td>
+            <td><input type="checkbox" name="carParking">Car Parking</td></tr>
+      </table>
+    </form>
+  </div>
+
+  <div class="checkboxes">
+    <form class="rulesBox" id="bigBox" method="POST" style="height: 180px;">
+      {% csrf_token %}
+      <h3>House/Room-mate Rules</h3>
+      <table>
+        <tr><td><input type="checkbox" name="noSmoking">No Smoking </td>
+            <td><input type="checkbox" name="noLateNights">No Late Night Arrivals</td>
+            <td><input type="checkbox" name="dogsOK">Dogs OK </td>
+            <td><input type="checkbox" name="noPets">No Pets</td>
+        </tr>
+        <tr><td><input type="checkbox" name="noDrinking">No Drinking </td>
+            <td><input type="checkbox" name="noFriends">Friends Not Allowed </td>
+            <td><input type="checkbox" name="catsOK">Cats OK </td>
+            <td><input type="checkbox" name="otherPetsOK">Other Pets OK</td>
+        </tr>
+      </table>
+
+    </form>
+  </div>
+
+  <form class="descBox" id="bigBox" method="POST" style="height: 180px;">
+    {% csrf_token %}
+    <h3>Describe your space</h3>
+    <input type="text" name="desc" placeholder="Tell us about the room or the place you are listing." style="margin-left: 10px; padding: 6px; width: 95%; height: 70px;">
+
+  </form>
+
+
+  <form  class="uploadBox" id="bigBox" method="POST" style="height: 120px;">
+    {% csrf_token %}
+    <h3>Upload Photos</h3>
+    <input class="uploadPhotos" type="file" accept="image/*">
+
+  </form>
+
+
+  <button type="submit"  value="Submit" class="listingBtn" style="margin-left:20px;">List your Room</button>
+  <button type="button" class="cancelBtn">Cancel</button>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+
+</body>
+</html>
