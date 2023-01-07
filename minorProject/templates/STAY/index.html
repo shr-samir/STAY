@@ -1,0 +1,85 @@
+{% load static %}
+<!--To load leaflet links-->
+{% load leaflet_tags%}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Availablerooms</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+ <!--Leaflet and circleclusterMarker  and css and js links respectively,but leaflet link should be ahead than circleclusterMarker-->
+ <link rel="stylesheet" type="text/css" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+ <link rel="stylesheet" type="text/css"
+   href="http://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/MarkerCluster.css" />
+ <link rel="stylesheet" type="text/css"
+   href="http://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/MarkerCluster.Default.css" />
+
+ <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
+ <script type='text/javascript' src='http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js'></script>
+ <script type='text/javascript'
+   src='http://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/leaflet.markercluster.js'></script>
+
+  <!--To load shapefile from database-->
+  <script src="{% static 'leaflet.ajax.js' %}"></script>
+
+  <!--To load css file-->
+  <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+  <style>    /* for popup style furthur visit  https://docs.mapbox.com/mapbox.js/example/v1.0.0/custom-popup-style/ */       
+    .custom-popup .leaflet-popup-content-wrapper {
+       background:#2c3e50;
+       color:#fff;
+       font-size:16px;
+       }
+     .custom-popup .leaflet-popup-tip {
+       border: none;
+       background:#2c3e50 ;
+       }
+   </style>
+  <!--To load jquery-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+</head>
+
+<body>
+  <div class="custom-popup" id="map"></div>
+
+  <script>
+    let mymap = L.map('map', {
+      center: [27.7172, 85.3240],  //map is zoomed directly to given  cordinate [28.394, 84.1240]
+      zoom: 12                     //this is cool hai guys
+    });
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', //osm tile layer and copyright are generated
+      maxZoom: 18,
+      id: 'mapbox.streets',
+
+    }).addTo(mymap);
+
+    var roomavailable = L.markerClusterGroup();
+ //for zooming on marker click//
+  function markerOnClick(e){
+  var latLngs = [e.target.getLatLng()];
+  var markerBounds = L.latLngBounds(latLngs);
+  mymap.fitBounds(markerBounds);
+}
+
+    function our_layers(map, options) {
+      var datasets = new L.GeoJSON.AJAX("{% url 'roomsfound' %}", { //where district is name for shapefile datasets
+        onEachFeature: function (feature, layer) {
+          layer.bindPopup( 
+          `Place Name: ${feature.properties.name}<br>Room_rate:${feature.properties.room_rate}<br>Description:  ${feature.properties.des}`
+          );
+          layer.on('click', markerOnClick)
+        }
+      });
+      datasets.on('data:loaded', function () {
+        // Add the cluster data after the geojson layer has loaded.
+        roomavailable.addLayer(datasets);
+        mymap.addLayer(roomavailable);
+      })
+    }
+
+our_layers();
+  </script>
+</body>
+</html>

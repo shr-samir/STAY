@@ -1,0 +1,4 @@
+html, body, #map {  /*For full height and width of leaflet map */
+    height: 100%;
+    width: 100%;
+}
