@@ -3,7 +3,7 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Profile from './pages/Profile'
 import SignIn from './pages/Signin'
-import SignOut from './pages/SignOut'
+import SignUp from './pages/SignUp'
 import Header from './components/Header'
 
 const App = () => {
@@ -15,7 +15,7 @@ const App = () => {
         <Route path='/about' element={<About />}></Route>
         <Route path='/profile' element={<Profile />}></Route>
         <Route path='/sign-in' element={<SignIn />}></Route>
-        <Route path='/sign-out' element={<SignOut />}></Route>
+        <Route path='/sign-up' element={<SignUp />}></Route>
       </Routes>
     </BrowserRouter>
   )
